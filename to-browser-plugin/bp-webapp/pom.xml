@@ -1,0 +1,447 @@
+<?xml version="1.0" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>bp-webapp</artifactId>
+
+	<parent>
+		<groupId>com.franciscoguemes.samples</groupId>
+		<artifactId>to-browser-plugin</artifactId>
+		<version>0.0.0-SNAPSHOT</version>
+	</parent>
+
+	<packaging>jar</packaging>
+	<name>browser-plugin-webapp</name>
+	<description>Browser Plugin Webapp is the web-app used to control the entire infraestructure of the browser plugin</description>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.franciscoguemes.samples</groupId>
+			<artifactId>bp-commons</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<!-- 6931 \ DEV-56: Prevents that the library logback-classic-1.2.3.jar 
+				is transitively inherited -->
+			<!-- and multiple bindings are defined for Log4J2. -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency>
+
+
+		<!-- for email -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<!-- -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.webjars</groupId> -->
+		<!-- <artifactId>jquery</artifactId> -->
+		<!-- </dependency> -->
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.webjars.bower</groupId> -->
+		<!-- <artifactId>bootstrap-css-only</artifactId> -->
+		<!-- </dependency> -->
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
+		<!-- <dependency> -->
+		<!-- <groupId>commons-io</groupId> -->
+		<!-- <artifactId>commons-io</artifactId> -->
+		<!-- </dependency> -->
+
+		<!-- test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>junit</groupId> -->
+<!-- 			<artifactId>junit</artifactId> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- this one is for maven-javadoc plugin only -->
+		<!-- <dependency> -->
+		<!-- <groupId>javax.interceptor</groupId> -->
+		<!-- <artifactId>javax.interceptor-api</artifactId> -->
+		<!-- </dependency> -->
+
+	</dependencies>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.8.1</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.17</version>
+				<configuration>
+					<configLocation>/home/jenkins/tools/checkstyle/sun_eclipse_checks.xml</configLocation>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<configuration>
+					<additionalparam>-Xdoclint:none</additionalparam>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.5</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.6</version>
+				<configuration>
+					<linkXref>true</linkXref>
+					<targetJdk>${maven.compiler.target}</targetJdk>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.3</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jdepend-maven-plugin</artifactId>
+				<version>2.0</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<build>
+
+		<!-- By default is the "maven-resources-plugin" the one that includes/excludes 
+			resources... -->
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<excludes>
+					<exclude>internal.properties</exclude>
+				</excludes>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<includes>
+					<include>internal.properties</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<!-- By default all resources under ${project.basedir}/src/test/resources/templates 
+			are included recursively -->
+		<!-- If you need to include any other test resource see <testResources> 
+			example -->
+
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- Show Spring Boot Build properties on actuator/info -->
+				<executions>
+					<execution>
+						<id>build-info</id>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<!-- This configuration prevents errors in Open JDK 11 -->
+					<forkCount>3</forkCount>
+					<reuseForks>true</reuseForks>
+					<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+				</configuration>
+			</plugin>
+
+			<!-- <plugin> -->
+			<!-- <groupId>com.github.eirslett</groupId> -->
+			<!-- <artifactId>frontend-maven-plugin</artifactId> -->
+			<!-- <version>1.6</version> -->
+			<!-- <configuration> -->
+			<!-- <installDirectory>target</installDirectory> -->
+			<!-- </configuration> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>install node and npm</id> -->
+			<!-- <goals> -->
+			<!-- <goal>install-node-and-npm</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <nodeVersion>v8.11.1</nodeVersion> -->
+			<!-- <npmVersion>6.5.0</npmVersion> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- <execution> -->
+			<!-- <id>npm install</id> -->
+			<!-- <goals> -->
+			<!-- <goal>npm</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <arguments>install</arguments> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- <execution> -->
+			<!-- <id>webpack build</id> -->
+			<!-- <goals> -->
+			<!-- <goal>webpack</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- Substitute the ~~ in the next line by dashes!!! -->
+			<!-- <arguments> ~~config ./${webpack.config.file}</arguments> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- <execution> -->
+			<!-- <id>npm test</id> -->
+			<!-- <goals> -->
+			<!-- <goal>npm</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <arguments>test</arguments> -->
+			<!-- </configuration> -->
+			<!-- <phase>test</phase> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<additionalparam>-Xdoclint:none</additionalparam>
+				</configuration>
+			</plugin>
+
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-site-plugin</artifactId> -->
+			<!-- <version>3.6</version> -->
+			<!-- <configuration> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<profiles>
+
+		<profile>
+			<id>development</id>
+			<properties>
+				<!-- <webpack.config.file>webpack.config.js</webpack.config.file> -->
+				<profile.id>development</profile.id>
+			</properties>
+			<dependencies>
+				<!--This should be only in development: offers live reload, turns of 
+					caching etc -->
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-devtools</artifactId>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<!-- This configuration prevents errors in Open JDK 11 -->
+							<forkCount>3</forkCount>
+							<reuseForks>true</reuseForks>
+							<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+							<!-- <excludes> -->
+							<!-- <exclude>**/*RepositoryTest.java</exclude> -->
+							<!-- </excludes> -->
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>test</id>
+			<properties>
+				<!-- <webpack.config.file>webpack.test.config.js</webpack.config.file> -->
+				<profile.id>test</profile.id>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>com.h2database</groupId>
+					<artifactId>h2</artifactId>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<!-- This configuration prevents errors in Open JDK 11 -->
+							<forkCount>3</forkCount>
+							<reuseForks>true</reuseForks>
+							<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+							<!-- <includes> -->
+							<!-- <include>**/*RepositoryTest.java</include> -->
+							<!-- </includes> -->
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+		<profile>
+			<id>production</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<!-- <webpack.config.file>webpack.production.config.js</webpack.config.file> -->
+				<profile.id>production</profile.id>
+			</properties>
+			<!-- <dependencies> -->
+			<!-- <dependency> -->
+			<!-- <groupId>com.h2database</groupId> -->
+			<!-- <artifactId>h2</artifactId> -->
+			<!-- <scope>test</scope> -->
+			<!-- </dependency> -->
+			<!-- </dependencies> -->
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<!-- This configuration prevents errors in Open JDK 11 -->
+							<forkCount>3</forkCount>
+							<reuseForks>true</reuseForks>
+							<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+							<!-- <excludes> -->
+							<!-- <exclude>**/*RepositoryTest.java</exclude> -->
+							<!-- </excludes> -->
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
